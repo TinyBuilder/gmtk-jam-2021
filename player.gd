@@ -1,10 +1,10 @@
 extends KinematicBody2D
 
 export (int) var acceleration = 100
-export (int) var max_force = 1000
+export (int) var max_force = 1700
 export (int) var max_speed = 100
 export (int) var jump_speed = -400
-export (int) var gravity = 120
+export (int) var gravity = 100
 export (int) var max_distance = 100
 
 var velocity = Vector2()
@@ -14,6 +14,9 @@ var boulder = null
 var tether = Vector2()
 var up_direction = Vector2(0, -1)
 var pulled = false
+var pulling = false
+var push_power = 0
+var pushing = false
 
 const Chain = preload("res://Chain.tscn")
 var chains = []
@@ -32,7 +35,7 @@ func get_input():
 	var left = Input.is_action_pressed('ui_left')
 	var jump = Input.is_action_just_pressed('ui_select')
 	
-	if velocity.x != 0 and not pulled:
+	if velocity.x != 0 and not pulled and is_on_floor():
 		velocity.x -= velocity.x / abs(velocity.x) * acceleration
 	
 	if right:
@@ -51,28 +54,33 @@ func _process(delta):
 	tether = boulder.global_position - global_position
 	var i = 1
 	for chain in chains:
-		chain.set_position(global_position)
+		chain.set_position(tether / 20 * i)
 		i += 1
 
 func _physics_process(delta):
-	if tether.length() > max_distance:
+	if tether.length() > max_distance and boulder.get_linear_velocity().length() > velocity.length():
 		pulled = true
-		
-	if tether.length() * 2 < max_distance and is_on_floor():
-		pulled = false
+	elif tether.length() > max_distance:
+		pulling = true
 	
 	if is_on_floor() and not jumped:
 		jumping = false
 		velocity.y = 0
 	
-	if abs(velocity.x) > max_speed:
+	if abs(velocity.x) > max_speed and not pulled:
 		velocity = velocity.normalized() * max_speed
-	
-	if pulled:
+
+	if tether.length() > max_distance:
+		print(pulled, pulling)
 		velocity += tether
-		boulder.apply_central_impulse(tether.normalized() * -1 * pow((tether.length() - max_distance), 2))
+		if pulling:
+			boulder.apply_central_impulse(tether.normalized() * -1 * max_force)
 	
-	var collision = move_and_collide(velocity * delta)
+	var collision = move_and_collide(velocity * delta, false)
+	
+	if collision and collision.collider == boulder and not pulled and is_on_floor():
+		pushing = true
+	
 	if collision:
 		
 		# get collision info
@@ -87,7 +95,21 @@ func _physics_process(delta):
 		var remaining_movement = remainder.slide(normal) # get projection of remainder on slope
 		remaining_movement = remaining_movement.normalized()  # normalize projection
 		remaining_movement *= horizontal_movement # scale projection to horizontal distance
-		move_and_collide(remaining_movement) # move the sprite along the slope
+		collision = move_and_collide(remaining_movement, false) # move the sprite along the slope
+		
+		if collision and collision.collider == boulder and not pulled and is_on_floor():
+			pushing = true
+	
+	if pushing:
+		push_power += 10
+		if push_power > max_force:
+			push_power = max_force
+		boulder.apply_central_impulse(tether.normalized() * push_power)
+	else:
+		push_power -= 5
 	
 	move_and_slide(Vector2(0,0), up_direction)
 	jumped = false
+	pushing = false
+	pulled = false
+	pulling = false
