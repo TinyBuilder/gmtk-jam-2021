@@ -31,6 +31,9 @@ func _ready():
 			print(chains[i-1])
 			add_child(chains[i-1])
 
+func kill():
+	pass
+
 func get_input():
 	var right = Input.is_action_pressed('ui_right')
 	var left = Input.is_action_pressed('ui_left')

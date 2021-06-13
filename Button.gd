@@ -4,7 +4,7 @@ extends Area2D
 # Declare member variables here. Examples:
 export (NodePath) var Gate
 
-var boulder
+var pressed = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -25,5 +25,7 @@ func _ready():
 
 
 func _on_Button_body_entered(body):
-	if body.get_name() == "Boulder":
+	if body.get_name() == "Boulder" and not pressed:
+		pressed = true
 		get_node(Gate).global_position.y += 64
+		$AnimatedSprite.play("pressed")

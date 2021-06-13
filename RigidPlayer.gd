@@ -19,12 +19,16 @@ var push_power = 0
 var pushing = false
 var impulse = Vector2()
 var approaching = false
+var floating = false
+var start = Vector2()
+var boulder_start = Vector2()
 
 const Chain = preload("res://Chain.tscn")
 var chains = []
 
 func _ready():
 	set_max_contacts_reported(3)
+	start = get_global_position()
 	if get_parent().has_node("Boulder"):
 		boulder = get_parent().get_child(1)
 		boulder.set_friction(1)
@@ -32,6 +36,12 @@ func _ready():
 			chains.append(Chain.instance())
 			print(chains[i-1])
 			add_child(chains[i-1])
+		
+		boulder_start = boulder.get_global_position()
+
+func kill():
+	set_global_position(start)
+	boulder.set_global_position(boulder_start)
 
 func get_input():
 	var right = Input.is_action_pressed('ui_right')
@@ -72,6 +82,8 @@ func _integrate_forces(state):
 		# get collision info
 		var normal = state.get_contact_local_normal(0)
 		impulse = impulse.slide(normal)
+	else:
+		floating = true
 	
 	var next_pos = global_position + impulse
 	if next_pos.distance_to(boulder.global_position) < global_position.distance_to(boulder.global_position):
@@ -96,3 +108,18 @@ func _integrate_forces(state):
 		set_linear_velocity(get_linear_velocity().normalized() * max_speed)
 	
 	apply_central_impulse(impulse)
+	
+	if impulse.x > 0.1:
+		$AnimatedSprite.set_flip_h(false)
+	elif impulse.x < -0.1:
+		$AnimatedSprite.set_flip_h(true)
+	
+	if pushing:
+		$AnimatedSprite.play("pushing")
+	elif pulling and not approaching:
+		$AnimatedSprite.play("pulling")
+	elif abs(get_linear_velocity().x) < 0.1:
+		$AnimatedSprite.play("default")
+	else:
+		$AnimatedSprite.play("walk")
+	
