@@ -616,10 +616,8 @@ position = Vector2( 44.0498, -38.7104 )
 current = true
 
 [node name="Button" parent="." instance=ExtResource( 12 )]
-position = Vector2( 834.274, 25.4572 )
+position = Vector2( 830.211, 23.811 )
 Gate = NodePath("Gate")
 
 [node name="Gate" parent="Button" instance=ExtResource( 13 )]
-position = Vector2( 142.196, -18.3944 )
-
-[connection signal="body_entered" from="Button" to="Button" method="_on_Button_body_entered"]
+position = Vector2( 187.313, -15.874 )
