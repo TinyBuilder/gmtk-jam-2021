@@ -4,8 +4,8 @@ export (int) var acceleration = 100
 export (int) var max_force = 1700
 export (int) var max_speed = 100
 export (int) var jump_speed = -400
-export (int) var gravity = 100
-export (int) var max_distance = 100
+export (int) var gravity = 50
+export (int) var max_distance = 200
 
 var velocity = Vector2()
 var jumping = false
@@ -25,6 +25,7 @@ func _ready():
 	if get_parent().has_node("Boulder"):
 		print("boulder found")
 		boulder = get_parent().get_child(1)
+		boulder.set_friction(1)
 		for i in range(20):
 			chains.append(Chain.instance())
 			print(chains[i-1])
@@ -35,7 +36,7 @@ func get_input():
 	var left = Input.is_action_pressed('ui_left')
 	var jump = Input.is_action_just_pressed('ui_select')
 	
-	if velocity.x != 0 and not pulled and is_on_floor():
+	if velocity.x != 0 and not pulled:
 		velocity.x -= velocity.x / abs(velocity.x) * acceleration
 	
 	if right:
@@ -58,26 +59,27 @@ func _process(delta):
 		i += 1
 
 func _physics_process(delta):
-	if tether.length() > max_distance and boulder.get_linear_velocity().length() > velocity.length():
-		pulled = true
-	elif tether.length() > max_distance:
-		pulling = true
-	
+#	if tether.length() > max_distance and boulder.get_linear_velocity().length() > max_speed:
+#		pulled = true
+#	elif tether.length() > max_distance:
+#		pulling = true
+#
+	if abs(velocity.x) > max_speed and not pulled:
+		velocity = velocity.normalized() * max_speed
+#
 	if is_on_floor() and not jumped:
 		jumping = false
 		velocity.y = 0
-	
-	if abs(velocity.x) > max_speed and not pulled:
-		velocity = velocity.normalized() * max_speed
-
-	if tether.length() > max_distance:
-		print(pulled, pulling)
-		velocity += tether
-		if pulling:
-			boulder.apply_central_impulse(tether.normalized() * -1 * max_force)
-	
+#
+#	if pulled:
+#		velocity += tether
+#
+#	if pulling:
+#		boulder.apply_central_impulse(tether.normalized() * -1 * max_force)
+#		velocity.x = 0
+#
 	var collision = move_and_collide(velocity * delta, false)
-	
+
 	if collision and collision.collider == boulder and not pulled and is_on_floor():
 		pushing = true
 	
