@@ -85,6 +85,7 @@ func _integrate_forces(state):
 			boulder.apply_central_impulse(tether.normalized() * -1 * max_force)
 		else:
 			pulled = true
+			boulder.apply_central_impulse(tether.normalized() * -1 * max_force * (tether.length() - max_distance) / tether.length())
 	
 	if pulling and not approaching:
 		impulse = impulse * (1 / (tether.length() - max_distance))
