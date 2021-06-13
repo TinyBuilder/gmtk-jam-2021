@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=2]
+[gd_scene load_steps=59 format=2]
 
 [ext_resource path="res://Lava_tileset.png" type="Texture" id=1]
 [ext_resource path="res://purple_square.png" type="Texture" id=2]
@@ -11,6 +11,8 @@
 [ext_resource path="res://Curved_Slope_Reverse.png" type="Texture" id=9]
 [ext_resource path="res://Shallower_Slope.png" type="Texture" id=10]
 [ext_resource path="res://Shallower_Slope_90_degrees.png" type="Texture" id=11]
+[ext_resource path="res://Button.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Gate.tscn" type="PackedScene" id=13]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
@@ -602,6 +604,8 @@ tile_data = PoolIntArray( -1114080, 0, 262144, -1114079, 0, 262145, -1114078, 1,
 
 [node name="Boulder" parent="." instance=ExtResource( 4 )]
 position = Vector2( 126.81, -45.3846 )
+contacts_reported = 3
+contact_monitor = true
 
 [node name="RigidPlayer" parent="." instance=ExtResource( 5 )]
 position = Vector2( 45.3845, -34.7058 )
@@ -610,3 +614,12 @@ mode = 2
 [node name="Camera2D" type="Camera2D" parent="RigidPlayer"]
 position = Vector2( 44.0498, -38.7104 )
 current = true
+
+[node name="Button" parent="." instance=ExtResource( 12 )]
+position = Vector2( 834.274, 25.4572 )
+Gate = NodePath("Gate")
+
+[node name="Gate" parent="Button" instance=ExtResource( 13 )]
+position = Vector2( 142.196, -18.3944 )
+
+[connection signal="body_entered" from="Button" to="Button" method="_on_Button_body_entered"]

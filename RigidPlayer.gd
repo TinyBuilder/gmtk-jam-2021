@@ -26,7 +26,6 @@ var chains = []
 func _ready():
 	set_max_contacts_reported(3)
 	if get_parent().has_node("Boulder"):
-		print("boulder found")
 		boulder = get_parent().get_child(1)
 		boulder.set_friction(1)
 		for i in range(20):
@@ -96,5 +95,4 @@ func _integrate_forces(state):
 	elif get_linear_velocity().length() > max_speed:
 		set_linear_velocity(get_linear_velocity().normalized() * max_speed)
 	
-	print(impulse)
 	apply_central_impulse(impulse)

@@ -2,7 +2,7 @@ extends Area2D
 
 
 # Declare member variables here. Examples:
-export (PackedScene) var Gate
+export (NodePath) var Gate
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -15,4 +15,4 @@ func _ready():
 
 func _on_Switch_body_entered(body):
 	if body.name.match("RigidPlayer"):
-		Gate.global_position.y -= 16
+		get_node(Gate).global_position.y += 16

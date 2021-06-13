@@ -2,17 +2,28 @@ extends Area2D
 
 
 # Declare member variables here. Examples:
-export (PackedScene) var Gate
+export (NodePath) var Gate
+
+var boulder
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	pass
+#	if get_parent().has_node("Boulder"):
+#		print("boulder found")
+#		boulder = get_parent().get_child(1)
+#		boulder.connect("body_entered", self, "_pushed")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
 
 
-func _on_Switch_body_entered(body):
-	if body.name.match("Boulder"):
-		Gate.global_position.y -= 16
+
+#func _pushed(body):
+#	self.get_node(Gate).global_position.y += 16
+
+
+func _on_Button_body_entered(body):
+	if body.get_name() == "Boulder":
+		get_node(Gate).global_position.y += 16
