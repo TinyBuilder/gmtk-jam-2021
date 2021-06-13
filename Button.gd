@@ -26,4 +26,4 @@ func _ready():
 
 func _on_Button_body_entered(body):
 	if body.get_name() == "Boulder":
-		get_node(Gate).global_position.y += 16
+		get_node(Gate).global_position.y += 64

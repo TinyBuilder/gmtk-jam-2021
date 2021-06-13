@@ -15,4 +15,4 @@ func _ready():
 
 func _on_Switch_body_entered(body):
 	if body.name.match("RigidPlayer"):
-		get_node(Gate).global_position.y += 16
+		get_node(Gate).global_position.y += 64
