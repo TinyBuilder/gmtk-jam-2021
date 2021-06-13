@@ -27,7 +27,6 @@ const Chain = preload("res://Chain.tscn")
 var chains = []
 
 func _ready():
-	set_max_contacts_reported(3)
 	start = get_global_position()
 	if get_parent().has_node("Boulder"):
 		boulder = get_parent().get_child(1)
@@ -79,7 +78,8 @@ func _integrate_forces(state):
 	if collisions:
 		# get collision info
 		var normal = state.get_contact_local_normal(0)
-		impulse = impulse.slide(normal)
+		if normal.y != 0:
+			impulse = impulse.slide(normal)
 	else:
 		floating = true
 	
@@ -97,7 +97,7 @@ func _integrate_forces(state):
 			boulder.apply_central_impulse(tether.normalized() * -1 * max_force * (tether.length() - max_distance) / tether.length())
 	
 	if pulling and not approaching:
-		impulse = impulse * (1 / (tether.length() - max_distance))
+		impulse = impulse * (acceleration - (tether.length() - max_distance)) / acceleration
 	
 	if pulled:
 		impulse = tether

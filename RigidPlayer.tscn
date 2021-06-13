@@ -123,6 +123,7 @@ animations = [ {
 } ]
 
 [node name="RigidPlayer" type="RigidBody2D"]
+contacts_reported = 3
 contact_monitor = true
 script = ExtResource( 2 )
 
