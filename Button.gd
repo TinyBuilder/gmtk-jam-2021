@@ -27,5 +27,5 @@ func _ready():
 func _on_Button_body_entered(body):
 	if body.get_name() == "Boulder" and not pressed:
 		pressed = true
-		get_node(Gate).global_position.y += 64
+		get_node(Gate).global_position.y += 94
 		$AnimatedSprite.play("pressed")

@@ -18,5 +18,5 @@ func _ready():
 func _on_Switch_body_entered(body):
 	if body.name.match("RigidPlayer") and not pressed:
 		pressed = true
-		get_node(Gate).global_position.y += 64
+		get_node(Gate).global_position.y += 94
 		$AnimatedSprite.play("toggled")
