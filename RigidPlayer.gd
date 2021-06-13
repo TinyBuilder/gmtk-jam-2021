@@ -46,8 +46,6 @@ func kill():
 func get_input():
 	var right = Input.is_action_pressed('ui_right')
 	var left = Input.is_action_pressed('ui_left')
-	var jump = Input.is_action_just_pressed('ui_select')
-	
 	impulse.x = 0
 	impulse.y = 0
 	
@@ -58,7 +56,7 @@ func get_input():
 	if get_linear_velocity().x > max_speed:
 		impulse.x = 0
 
-func _process(delta):
+func _process(_delta):
 	pulling = false
 	pulled = false
 	pushing = false
