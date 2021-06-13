@@ -8,7 +8,7 @@ var pressed = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	$AnimatedSprite.play("default")
 #	if get_parent().has_node("Boulder"):
 #		print("boulder found")
 #		boulder = get_parent().get_child(1)

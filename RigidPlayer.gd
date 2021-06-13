@@ -39,8 +39,7 @@ func _ready():
 		boulder_start = boulder.get_global_position()
 
 func kill():
-	set_global_position(start)
-	boulder.set_global_position(boulder_start)
+	get_tree().reload_current_scene()
 
 func get_input():
 	var right = Input.is_action_pressed('ui_right')
