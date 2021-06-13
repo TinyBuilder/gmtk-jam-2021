@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Curved_Slope.png-0eafa5ec8ce6fee71405d1ffa674455b.stex"
+path="res://.import/longer_pillar.png-1a8e2687a6611a39847802aa31b38c71.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Curved_Slope.png"
-dest_files=[ "res://.import/Curved_Slope.png-0eafa5ec8ce6fee71405d1ffa674455b.stex" ]
+source_file="res://longer_pillar.png"
+dest_files=[ "res://.import/longer_pillar.png-1a8e2687a6611a39847802aa31b38c71.stex" ]
 
 [params]
 

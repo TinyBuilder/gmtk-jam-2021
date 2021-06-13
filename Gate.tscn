@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://PIllar.png" type="Texture" id=1]
+[ext_resource path="res://longer_pillar.png" type="Texture" id=1]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -11,10 +11,9 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 2, 8 )
+extents = Vector2( 8, 32 )
 
 [node name="Gate" type="StaticBody2D"]
-scale = Vector2( 4, 4 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )

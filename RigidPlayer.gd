@@ -45,9 +45,13 @@ func kill():
 func get_input():
 	var right = Input.is_action_pressed('ui_right')
 	var left = Input.is_action_pressed('ui_left')
+	var reset = Input.is_action_pressed('ui_accept')
+	
 	impulse.x = 0
 	impulse.y = 0
 	
+	if reset:
+		kill()
 	if right:
 		impulse.x += acceleration
 	if left:

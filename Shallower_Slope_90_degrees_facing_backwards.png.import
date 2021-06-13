@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Curved_Slope.png-0eafa5ec8ce6fee71405d1ffa674455b.stex"
+path="res://.import/Shallower_Slope_90_degrees_facing_backwards.png-ce746c6f7a3706a9918c13a0d2108d81.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Curved_Slope.png"
-dest_files=[ "res://.import/Curved_Slope.png-0eafa5ec8ce6fee71405d1ffa674455b.stex" ]
+source_file="res://Shallower_Slope_90_degrees_facing_backwards.png"
+dest_files=[ "res://.import/Shallower_Slope_90_degrees_facing_backwards.png-ce746c6f7a3706a9918c13a0d2108d81.stex" ]
 
 [params]
 
